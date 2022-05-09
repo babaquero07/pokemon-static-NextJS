@@ -1,5 +1,6 @@
 import { FC, PropsWithChildren } from "react"
 import Head from "next/head"
+import { NavBar } from '../ui';
 
 export const Layout: FC<PropsWithChildren<{title:string}>> = ({ children, title}) => {
   return (
@@ -11,7 +12,11 @@ export const Layout: FC<PropsWithChildren<{title:string}>> = ({ children, title}
             <meta name="keywords" content='XXX, pokemon, pokedex'/>
         </Head>
 
-        <main>
+        <NavBar/>
+
+        <main style={{
+          padding: '0px 20px'
+        }}>
             { children }
         </main>
     </>
