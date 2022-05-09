@@ -1,17 +1,17 @@
 import { NextPage, GetStaticProps, GetStaticPaths } from "next";
-import { useRouter } from "next/router"
+import { pokeApi } from "../../api";
 import { Layout } from "../../components/layouts"
+import { Pokemon } from "../../interfaces";
 
 interface Props {
-  id: string;
-  name: string
+  pokemon: Pokemon
 }
 
-const PokemonPage: NextPage<Props> = ({id, name}) => {
+const PokemonPage: NextPage<Props> = ({pokemon}) => {
 
   return (
     <Layout title="Algun pokemon">
-        <h1>{id} - {name}</h1>
+        {/* <h1>{id} - {name}</h1> */}
     </Layout>
   )
 }
@@ -19,23 +19,24 @@ const PokemonPage: NextPage<Props> = ({id, name}) => {
 // You should use getStaticPaths if you’re statically pre-rendering pages that use dynamic routes
 export const getStaticPaths: GetStaticPaths = async (ctx) => {
 
+  const pokemons151 = [...Array(151)].map((value, index) => `${index + 1}`)
+  const paths = pokemons151.map(id => ({
+    params: {id}
+  }))
+
   return {
-    paths: [
-      {
-        params: {id: '1'}
-      }
-    ],
+    paths,
     fallback: false
   }
 }
 
-export const getStaticProps: GetStaticProps = async (ctx) => {
-  // const { data } = await pokeApi.get<PokemonListResponse>('/pokemon?limit=151')
+export const getStaticProps: GetStaticProps = async ({params}) => {
+  const {id} = params as {id: string};
+  const {data} = await pokeApi.get<Pokemon>(`pokemon/${id}`)
 
   return {
     props: {
-      id: 1,
-      name: 'Bulbasaur'
+      pokemon: data
     }
   }
 }
