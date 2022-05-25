@@ -17,7 +17,7 @@ export const PokemonCard: FC<Props> = ({pokemon}) => {
 
   return (
     <Grid xs={6} sm={3} md={2} xl={1}>
-        <Card hoverable clickable onClick={() => router.push(`/pokemon/${pokemon.id}`)}>
+        <Card hoverable clickable onClick={() => router.push(`/name/${pokemon.name}`)}>
             <Card.Body css={{p: 1}}>
                 <Card.Image src={pokemon.img} width='100%' height={140} alt={pokemon.name}/>
             </Card.Body>
